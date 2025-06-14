@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2><a href=/>/</a><a href=/imgs/>imgs/</a></h2>
+<p>::: various images</p>
+
+<ul>
+{% for img in imgs %}
+    <li><a href="{{ img.href }}">{{ img.name }}</a></li>
+{% else %}
+    <li>no imgs found :/</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

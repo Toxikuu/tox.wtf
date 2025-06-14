@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.ch(f) }}
+{% endblock %}
+
+{% block content %}
+<p>::: a cute little script to replace dmenu with fzf and alacritty</p>
+
+{% raw %}
+<pre>
+<code>
+#!/bin/bash
+
+fifo=$(mktemp -u)
+infile=$(mktemp)
+mkfifo "$fifo"
+trap "rm -f $fifo $infile" EXIT
+
+# Capture stdin if piped into
+[ ! -t 0 ] && cat > "$infile"
+
+POINTER="${POINTER:--}"
+alacritty msg create-window \
+    -o window.padding.x=20  \
+    -o window.padding.y=20  \
+    -T fzm --class fzm      \
+    -e sh -c "
+    fzf --color=bw --border=horizontal --reverse --pointer='$POINTER ' --no-scrollbar \
+        --prompt='$POINTER ' --input-border=none --no-separator --multi --ellipsis='' \
+    $( [ -s "$infile" ] && echo "< $infile") > $fifo
+    "
+# I have my window manager configured to float and center this window
+
+cat "$fifo"
+rm "$fifo"
+</code>
+</pre>
+{% endraw %}
+
+{% endblock %}

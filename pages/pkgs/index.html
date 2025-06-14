@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2><a href=/>/</a><a href=/pkgs/>pkgs/</a></h2>
+
+<p>::: instructions for building packages</p>
+
+<p>
+there's no particular rationale behind what packages do and don't get covered
+here. if you'd like to suggest a package or contribute your own directions,
+contact me, submit a pr, etc.
+</p>
+
+<ul>
+{% for pkg in pkgs %}
+    <li><a href="{{ pkg.href }}">{{ pkg.name }}</a></li>
+{% else %}
+    <li>no packages found :(</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

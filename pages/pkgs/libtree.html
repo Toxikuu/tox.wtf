@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.ph(pkg) }}
+{% endblock %}
+
+{% block content %}
+<p>::: ldd as a tree</p>
+
+<pre>
+<code>
+git clone --depth=1 https://github.com/haampie/libtree .
+
+make
+make PREFIX=/usr install
+</code>
+</pre>
+
+{% endblock %}

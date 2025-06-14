@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.ph(pkg) }}
+{% endblock %}
+
+{% block content %}
+<p>::: extremely fast non-cryptographic hash algorithm</p>
+
+<pre>
+<code>
+git clone --depth=1 https://github.com/haampie/libtree .
+
+make PREFIX=/usr DISPATCH=1
+make PREFIX=/usr DISPATCH=1 install
+
+rm -vf /usr/lib/libxxhash.a
+</code>
+</pre>
+
+{% endblock %}

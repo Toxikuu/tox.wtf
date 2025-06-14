@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.ph(pkg) }}
+{% endblock %}
+
+{% block content %}
+<p>::: terminal irc client</p>
+
+<pre>
+<code>
+git clone --depth=1 https://git.causal.agency/catgirl .
+
+sed -i '/dev:/d' Makefile
+
+./configure         \
+    --prefix=/usr   \
+    --mandir=/usr/share/man
+
+make
+make install
+</code>
+</pre>
+
+{% endblock %}

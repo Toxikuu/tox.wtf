@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.ph(pkg) }}
+{% endblock %}
+
+{% block content %}
+<p>::: multipurpose relay</p>
+
+<pre>
+<code>
+curl -fsSL http://www.dest-unreach.org/socat/download/socat-1.8.0.3.tar.gz |
+    tar --strip-components=1 -xzf -
+
+./configure         \
+    --prefix=/usr   \
+    --mandir=/usr/share/man
+
+make
+make install
+</code>
+</pre>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+    <link href="/s/style.css" rel="stylesheet">
+    <title>tox.wtf</title>
+</head>
+
+<body>
+    <header>
+        <h1>
+            <a href="/index.html">tox.wtf</a>
+        </h1>
+
+        <nav>
+            <a href="/pkgs/index.html">pkgs</a> |
+            <a href="/logs/index.html">logs</a> |
+            <a href="/imgs/index.html">imgs</a> |
+            <a href="/code/index.html">code</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p><a onclick="history.back()">EOF</a></p>
+    </footer>
+</body>
+
+</html>

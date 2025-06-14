@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.ph(pkg) }}
+{% endblock %}
+
+{% block content %}
+<p>::: text pager</p>
+
+<pre>
+<code>
+git clone --depth=1 https://github.com/gwsw/less .
+make -f Makefile.aut distfiles
+autoreconf -fiv
+
+./configure             \
+    --prefix=/usr       \
+    --sysconfdir=/etc   \
+    --with-regex=pcre2
+
+make
+make install
+</code>
+</pre>
+
+{% endblock %}
