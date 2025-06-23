@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.pwd(["self", "bio"]) }}
+{% endblock %}
+
+{% block content %}
+<p>::: a little about me</p>
+
+<h3>hi im tox</h3>
+<p>
+i daily drive linux from scratch. i'm a cs major. i'm nocturnal. i'm an
+anarchocommunist, an antitheisst, and generally an iconoclast. i love  music,
+especially the experimental, niche, and abrasive. i'm a celeste grandmaster, a
+decorated terrarian, one of like a dozen bmc flash players, and an avid
+gungeoneer. i also have 4,500 hours in geometry dash.
+</p>
+
+<h3>and here's a few of projects</h3>
+<p>
+in addition to this website, i've also got a collection of projects i've been
+working on:
+</p>
+<ul>
+    <li>to          ::: heavily wip lfs package manager</li>
+    <li>to-pkgs     ::: to's package repository</li>
+    <li>tuun        ::: mpv-based music player</li>
+    <li>rip         ::: music rippepr</li>
+    <li>lfstage     ::: lfs stage file generator</li>
+    <li>permitit    ::: cute error handling crate</li>
+    <li>catfetch    ::: cute fetch script featuring a cat</li>
+</ul>
+
+{% endblock %}

@@ -6,16 +6,15 @@ from vars import *
 
 def render_code():
     """
-    Template and render all pages in pages/code, using the base.html located
-    there.
+    Template and render all pages in pages/code
     """
-    env = Environment(loader=FileSystemLoader("pages/code"))
 
     for f in generate_code_list():
-        template = env.get_template(f)
-        rendered = template.render(f=os.path.splitext(f)[0])
+        fh = f"code/{f}.html"
+        template = env.get_template(fh)
+        rendered = template.render(f=f)
 
-        outpath = os.path.join(target, f"code/{f}")
+        outpath = os.path.join(target, fh)
         outdir = os.path.dirname(outpath)
 
         os.makedirs(outdir, exist_ok=True)
@@ -24,11 +23,10 @@ def render_code():
 
 
 def render_code_index():
-    env = Environment(loader=FileSystemLoader("pages/code"))
-    template = env.get_template("index.html")
+    template = env.get_template("code/index.html")
 
     code = [
-        {"name": os.path.splitext(f)[0], "href": f}
+        {"name": f, "href": f}
         for f in generate_code_list()
     ]
 
@@ -43,4 +41,4 @@ def render_code_index():
 def generate_code_list():
     files = [ f for f in os.listdir(os.path.join(pages_dir, "code")) if f.endswith(".html") and not f in ignore ]
     files.sort(key=lambda f: os.path.getmtime(os.path.join(pages_dir, f"code/{f}")))
-    return files
+    return [ os.path.splitext(f)[0] for f in files ]

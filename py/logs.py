@@ -6,16 +6,15 @@ from vars import *
 
 def render_logs():
     """
-    Template and render all pages in pages/logs, using the base.html located
-    there.
+    Template and render all pages in pages/logs
     """
-    env = Environment(loader=FileSystemLoader("pages/logs"))
 
-    for log in generate_logs_list():
-        template = env.get_template(log)
-        rendered = template.render(log=os.path.splitext(log)[0])
+    for f in generate_logs_list():
+        fh = f"logs/{f}.html"
+        template = env.get_template(fh)
+        rendered = template.render(f=f)
 
-        outpath = os.path.join(target, f"logs/{log}")
+        outpath = os.path.join(target, fh)
         outdir = os.path.dirname(outpath)
 
         os.makedirs(outdir, exist_ok=True)
@@ -24,14 +23,11 @@ def render_logs():
 
 
 def render_logs_index():
-    env = Environment(loader=FileSystemLoader("pages/logs"))
-    # print(os.listdir("."))
-
-    template = env.get_template("index.html")
+    template = env.get_template("logs/index.html")
 
     logs = [
-        {"name": os.path.splitext(log)[0], "time": round(os.path.getctime(f"pages/logs/{log}")), "href": log}
-        for log in generate_logs_list()
+        {"name": f, "href": f, "time": round(os.path.getctime(f"pages/logs/{f}.html"))}
+        for f in generate_logs_list()
     ]
 
     rendered = template.render(logs=logs)
@@ -45,4 +41,4 @@ def render_logs_index():
 def generate_logs_list():
     files = [ f for f in os.listdir(os.path.join(pages_dir, "logs")) if f.endswith(".html") and not f in ignore ]
     files.sort(key=lambda f: os.path.getmtime(os.path.join(pages_dir, f"logs/{f}")))
-    return files
+    return [ os.path.splitext(f)[0] for f in files ]

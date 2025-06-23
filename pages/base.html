@@ -1,3 +1,5 @@
+{% import "macros.html" as macros %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,18 +12,20 @@
 <body>
     <header>
         <h1>
-            <a href="/index.html">tox.wtf</a>
+            <a href="/">tox.wtf</a>
         </h1>
 
         <nav>
-            <a href="/pkgs/index.html">pkgs</a> |
-            <a href="/logs/index.html">logs</a> |
-            <a href="/imgs/index.html">imgs</a> |
-            <a href="/code/index.html">code</a>
+            <a href="/pkgs/">/pkgs/</a> |
+            <a href="/logs/">/logs/</a> |
+            <a href="/imgs/">/imgs/</a> |
+            <a href="/code/">/code/</a> |
+            <a href="/self/">/self/</a>
         </nav>
     </header>
 
     <main>
+        {% block header %}{% endblock %}
         {% block content %}{% endblock %}
     </main>
 

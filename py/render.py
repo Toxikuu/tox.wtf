@@ -1,4 +1,3 @@
-from jinja2 import Environment, FileSystemLoader
 import os
 import shutil
 from vars import *
@@ -7,11 +6,10 @@ import pkgs
 import logs
 import imgs
 import code
+import _self
 
 
 def render_root():
-    env = Environment(loader=FileSystemLoader("pages"))
-
     template = env.get_template("index.html")
     rendered = template.render()
 
@@ -35,4 +33,5 @@ if __name__ == "__main__":
     imgs.render_imgs()
     code.render_code_index()
     code.render_code()
+    _self.render()
     print(f"Site rendered to {target}")

@@ -6,16 +6,15 @@ from vars import *
 
 def render_pkgs():
     """
-    Template and render all pages in pages/pkgs, using the base.html located
-    there.
+    Template and render all pages in pages/pkgs
     """
-    env = Environment(loader=FileSystemLoader("pages/pkgs"))
 
-    for pkg in generate_pkgs_list():
-        template = env.get_template(pkg)
-        rendered = template.render(pkg=os.path.splitext(pkg)[0])
+    for f in generate_pkgs_list():
+        fh = f"pkgs/{f}.html"
+        template = env.get_template(fh)
+        rendered = template.render(f=f)
 
-        outpath = os.path.join(target, f"pkgs/{pkg}")
+        outpath = os.path.join(target, fh)
         outdir = os.path.dirname(outpath)
 
         os.makedirs(outdir, exist_ok=True)
@@ -23,19 +22,12 @@ def render_pkgs():
             f.write(rendered)
 
 
-def generate_pkgs_list():
-    files = [ f for f in os.listdir(os.path.join(pages_dir, "pkgs")) if f.endswith(".html") and not f in ignore ]
-    files.sort()
-    return files
-
-
 def render_pkgs_index():
-    env = Environment(loader=FileSystemLoader("pages/pkgs"))
-    template = env.get_template("index.html")
+    template = env.get_template("pkgs/index.html")
 
     pkgs = [
-        {"name": os.path.splitext(pkg)[0], "href": pkg}
-        for pkg in generate_pkgs_list()
+        {"name": f, "href": f}
+        for f in generate_pkgs_list()
     ]
 
     rendered = template.render(pkgs=pkgs)
@@ -44,3 +36,9 @@ def render_pkgs_index():
 
     with open(outpath, "w") as f:
         f.write(rendered)
+
+
+def generate_pkgs_list():
+    files = [ f for f in os.listdir(os.path.join(pages_dir, "pkgs")) if f.endswith(".html") and not f in ignore ]
+    files.sort()
+    return [ os.path.splitext(f)[0] for f in files ]

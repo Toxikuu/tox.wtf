@@ -1,0 +1,10 @@
+Add a self section
+
+Add a music section
+
+Add a radical reading corner
+
+Clean up index.html spam
+
+Probably extend "/base.html" instead of the current system where base.html is
+just copied everywhere

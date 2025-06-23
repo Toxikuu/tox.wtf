@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.pwd(["pkgs", "tinyxxd"]) }}
+{% endblock %}
+
+{% block content %}
+<p>::: standalone version of vim's xxd</p>
+
+<pre>
+<code>
+git clone --depth=1 https://github.com/xyproto/tinyxxd .
+
+make
+make install
+install -vDm644 tinyxxd.1 /usr/share/man/man1/xxd.1
+
+mv -vf /usr/bin/{tiny,}xxd
+</code>
+</pre>
+
+{% endblock %}

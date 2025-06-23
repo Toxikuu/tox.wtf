@@ -1,0 +1,3 @@
+{% macro pwd(parts) %}
+<h2><a href="/">/</a>{% set ns = namespace(path="") %}{% for part in parts %}{% set ns.path = ns.path ~ "/" ~ part %}{% if loop.last %}<a href="{{ ns.path }}">{{ part }}</a>{% else %}<a href="{{ ns.path }}/">{{ part }}/</a>{% endif %}{% endfor %}</h2>
+{% endmacro %}

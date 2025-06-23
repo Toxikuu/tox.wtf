@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.pwd(["code", "fzm"]) }}
+{% endblock %}
+
+{% block content %}
+<p>::: exceedingly cute x86_64 assembly pause implementation, featuring a custom
+elf header</p>
+
+<p>
+there was literally no reason to do this. i just wanted to see how small i could
+make my pause implementation. the answer is pretty fucking small (127 bytes).
+like smaller than its source (478 bytes).
+
+huge thanks to https://nathanotterness.com/2021/10/tiny_elf_modernized.html
+</p>
+
+{% raw %}
+<pre>
+<code>
+; assemble using:
+;   nasm -f bin -o pause pause.asm
+[bits 64]
+
+file_load_va: equ 4096 * 40
+
+db 0x7f, 'E', 'L', 'F'
+db 2
+db 1
+db 1
+db 0
+dq 0
+dw 2
+dw 0x3e
+dd 1
+
+dq entry_point + file_load_va
+dq program_headers_start
+; section header is ommitted to save a few bytes
+dq 0
+dd 0
+dw 64
+dw 0x38
+dw 1
+dw 0x40
+dw 0
+dw 0
+
+program_headers_start:
+dd 1
+dd 5
+dq 0
+dq file_load_va
+dq file_load_va
+dq file_end
+dq file_end
+dq 0x200000
+
+entry_point:
+    mov eax, 34 ; pause
+    syscall
+
+file_end:
+</code>
+</pre>
+{% endraw %}
+
+{% endblock %}

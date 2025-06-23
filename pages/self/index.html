@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2><a href=/>/</a><a href=/self/>self/</a></h2>
+
+<p>::: self</p>
+
+<ul>
+{% for f in files %}
+    <li><a href="{{ f.href }}">{{ f.name }}</a></li>
+{% else %}
+    <li>no files found D:</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
