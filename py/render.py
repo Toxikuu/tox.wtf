@@ -6,6 +6,7 @@ import pkgs
 import logs
 import imgs
 import code
+import read
 import _self
 
 
@@ -33,5 +34,6 @@ if __name__ == "__main__":
     imgs.render_imgs()
     code.render_code_index()
     code.render_code()
+    read.render()
     _self.render()
     print(f"Site rendered to {target}")
