@@ -9,7 +9,10 @@
 
 <pre>
 <code>
-git clone --depth=1 https://github.com/gwsw/less .
+tmpwtf=$(mktemp -d /tmp/XXX.wtf)
+git clone --depth=1 https://github.com/gwsw/less $tmpwtf
+
+pushd $tmpwtf >/dev/null
 make -f Makefile.aut distfiles
 autoreconf -fiv
 
@@ -20,6 +23,9 @@ autoreconf -fiv
 
 make
 make install
+popd >/dev/null
+
+rm -rf $tmpwtf
 </code>
 </pre>
 

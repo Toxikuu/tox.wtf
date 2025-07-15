@@ -9,10 +9,13 @@
 
 <pre>
 <code>
-git clone --depth=1 https://github.com/haampie/libtree .
+tmpwtf=$(mktemp -d /tmp/XXX.wtf)
+git clone --depth=1 https://github.com/haampie/libtree $tmpwtf
 
-make
-make PREFIX=/usr install
+make -C $tmpwtf
+make -C $tmpwtf PREFIX=/usr install
+
+rm -rf $tmpwtf
 </code>
 </pre>
 

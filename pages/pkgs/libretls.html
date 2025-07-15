@@ -9,13 +9,18 @@
 
 <pre>
 <code>
-git clone --depth=1 https://git.causal.agency/libretls .
+tmpwtf=$(mktemp -d /tmp/XXX.wtf)
+git clone --depth=1 https://git.causal.agency/libretls $tmpwtf
 
+pushd $tmpwtf >/dev/null
 autoreconf -fiv
 ./configure --prefix=/usr
 
 make
 make install
+popd >/dev/null
+
+rm -rf $tmpwtf
 </code>
 </pre>
 

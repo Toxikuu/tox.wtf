@@ -9,11 +9,15 @@
 
 <pre>
 <code>
-git clone --depth=1 https://github.com/burntsushi/ripgrep .
+tmpwtf=$(mktemp -d /tmp/XXX.wtf)
+git clone --depth=1 https://github.com/burntsushi/ripgrep $tmpwtf
 
+pushd $tmpwtf >/dev/null
 cargo build --release --features=pcre2
 install -vm755 target/release/rg -t /usr/bin/
+popd >/dev/null
 
+rm -rf $tmpwtf
 rg --generate complete-bash |
     install -vDm644 /dev/stdin /usr/share/bash-completion/completions/rg
 rg --generate man           |

@@ -9,8 +9,10 @@
 
 <pre>
 <code>
-git clone --depth=1 https://git.causal.agency/catgirl .
+tmpwtf=$(mktemp -d /tmp/XXX.wtf)
+git clone --depth=1 https://git.causal.agency/catgirl $tmpwtf
 
+pushd $tmpwtf >/dev/null
 sed -i '/dev:/d' Makefile
 
 ./configure         \
@@ -19,6 +21,9 @@ sed -i '/dev:/d' Makefile
 
 make
 make install
+popd >/dev/null
+
+rm -rf $tmpwtf
 </code>
 </pre>
 
