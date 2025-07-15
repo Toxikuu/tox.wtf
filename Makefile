@@ -14,6 +14,6 @@ serve: build
 	caddy run --config Caddyfile
 
 local-serve: build
-	python3 -m http.server -d target
+	caddy run --config Caddyfile.local
 
 dev: clean build serve

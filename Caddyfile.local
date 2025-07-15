@@ -1,0 +1,8 @@
+:8080 {
+        root * /home/t/dev/tox.wtf/target
+
+        # Fallbacks
+        try_files {path} {path}.html {path}/index.html
+
+        file_server
+}
