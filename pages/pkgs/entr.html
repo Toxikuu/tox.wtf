@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.pwd(["pkgs", "entr"]) }}
+{% endblock %}
+
+{% block content %}
+<p>::: run arbitrary commands on file change</p>
+
+<pre>
+<code>
+tmpwtf=$(mktemp -d /tmp/XXX.wtf)
+git clone --depth=1 https://github.com/eradman/entr $tmpwtf
+
+pushd $tmpwtf >/dev/null
+./configure
+make
+make PREFIX=/usr install
+popd >/dev/null
+
+rm -rf $tmpwtf
+</code>
+</pre>
+
+{% endblock %}
