@@ -15,39 +15,39 @@
 
 body {
     font-family: tamzen;
-    background-color: #000;
+    background-color: #24272f;
     text-align: left;
-    color: #e9e9e9;
+    color: #f6e5dd;
     margin: 2rem;
 }
 
 header {
     font-family: tamzen;
     text-align: right;
-    background-color: #000;
-    color: #e9e9e9;
+    background-color: #24272f;
+    color: #f6e5dd;
 }
 
 footer {
     font-family: tamzen;
     text-align: left;
-    background: #000;
-    color: #6345e6;
+    background: #24272f;
+    color: #f2a978;
 }
 
 
 blockquote {
     font-family: tamzen;
     text-align: left;
-    background-color: #090909;
-    color: #6345e6;
+    background-color: #24272f;
+    color: #f2a978;
 }
 
 
 /* links */
 a {
     font-family: tamzen;
-    color: #6345e6;
+    color: #f2a978;
     text-decoration: none;
 }
 
@@ -64,17 +64,17 @@ ul {
 
 li::before {
     content: "- ";
-    color: #e9e9e9;
+    color: #f6e5dd;
     margin-right: 0.5em;
 }
 
 
 /* code blocks */
 pre {
-    background: #090909;
-    color: #6345e6;
+    background: #24272f;
+    color: #97adc2;
 
-    border: 1px solid #e9e9e9;
+    border: 1px solid #f2a978;
 
     overflow-x: auto;
     padding-left: 1em;
