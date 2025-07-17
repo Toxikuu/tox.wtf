@@ -5,4 +5,9 @@
         try_files {path} {path}.html {path}/index.html
 
         file_server
+
+        handle_errors {
+            rewrite * /{http.error.status_code}.html
+            file_server
+        }
 }

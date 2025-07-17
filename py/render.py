@@ -18,22 +18,30 @@ def render_root():
     with open(outpath, "w") as f:
         f.write(rendered)
 
+def render_error_pages():
+    for f in os.listdir("pages/err"):
+        template = env.get_template(f"err/{f}")
+        rendered = template.render()
+
+        outpath = os.path.join(target, f)
+        with open(outpath, "w") as f:
+            f.write(rendered)
+
 
 if __name__ == "__main__":
     # Some setup
     os.makedirs(target, exist_ok=True)
     shutil.copytree("static", f"target/s", dirs_exist_ok=True)
 
-    # Rendering
+    # Render special pages
     render_root()
-    pkgs.render_pkgs_index()
-    pkgs.render_pkgs()
-    logs.render_logs_index()
-    logs.render_logs()
-    imgs.render_imgs_index()
-    imgs.render_imgs()
-    code.render_code_index()
-    code.render_code()
+    render_error_pages()
+
+    # Render normal pages
+    pkgs.render()
+    logs.render()
+    imgs.render()
+    code.render()
     read.render()
     _self.render()
     print(f"Site rendered to {target}")
