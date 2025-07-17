@@ -4,12 +4,18 @@ import shutil
 from vars import *
 
 
-def render_code():
+def render():
+    file_list = generate_file_list()
+    render_index(file_list)
+    render_files(file_list)
+
+
+def render_files(file_list):
     """
     Template and render all pages in pages/code
     """
 
-    for f in generate_code_list():
+    for f in file_list:
         fh = f"code/{f}.html"
         template = env.get_template(fh)
         rendered = template.render(f=f)
@@ -22,12 +28,12 @@ def render_code():
             f.write(rendered)
 
 
-def render_code_index():
+def render_index(file_list):
     template = env.get_template("code/index.html")
 
     code = [
         {"name": f, "href": f}
-        for f in generate_code_list()
+        for f in file_list
     ]
 
     rendered = template.render(code=code)
@@ -38,7 +44,7 @@ def render_code_index():
         f.write(rendered)
 
 
-def generate_code_list():
+def generate_file_list():
     files = [ f for f in os.listdir(os.path.join(pages_dir, "code")) if f.endswith(".html") and not f in ignore ]
     files.sort(key=lambda f: os.path.getmtime(os.path.join(pages_dir, f"code/{f}")))
     return [ os.path.splitext(f)[0] for f in files ]
