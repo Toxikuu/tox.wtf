@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.pwd(["code", "tinaries", "reset.asm"]) }}
+{% endblock %}
+
+{% block content %}
+<p>::: exceedingly cute x86_64 assembly reset implementation, featuring a custom
+elf header</p>
+
+<p>
+same idea as <a href=./clear.asm>./clear.asm</a>
+</p>
+
+{% raw %}
+<pre>
+<code>
+; reset.asm (x86_64) - the cutest possible(?) implementation of reset
+;
+; licensing:
+;   do whatever the fuck you want
+;   im not involved
+;
+; assemble using:
+;   nasm -f bin reset.asm -o /dev/stdout | install -vm755 /dev/stdin reset
+;
+; -- tox
+[bits 64]
+
+file_load_va: equ 4096 * 40
+
+db 0x7f, 'E', 'L', 'F'
+db 2
+db 1
+db 1
+db 0
+dq 0
+dw 2
+dw 0x3e
+dd 1
+
+dq entry_point + file_load_va
+dq program_headers_start
+
+dq 0
+dd 0
+dw 64
+dw 0x38
+dw 1
+dw 0x40
+dw 0
+dw 0
+
+program_headers_start:
+dd 1
+dd 5
+dq 0
+dq file_load_va
+dq file_load_va
+dq file_end
+dq file_end
+dq 0x200000
+
+section .rodata
+msg:        db      0x1b, 'c',  ; \x1bc
+len         equ     $-msg
+
+entry_point:
+    mov     eax,    1           ; sys_write
+
+    xor     edi,    edi         ; fd 1 (stdout)
+    inc     edi
+
+    lea     esi,    [rel msg]   ; address of message
+    mov     edx,    len         ; length
+    syscall
+
+    mov     eax,    60          ; sys_exit
+    xor     edi,    edi         ; code 0
+    syscall
+
+file_end:
+</code>
+</pre>
+{% endraw %}
+
+{% endblock %}

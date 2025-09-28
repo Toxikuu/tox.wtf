@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block header %}
-    {{ macros.pwd(["code", "fzm"]) }}
+    {{ macros.pwd(["code", "tinaries", "pause.asm"]) }}
 {% endblock %}
 
 {% block content %}
@@ -9,18 +9,22 @@
 elf header</p>
 
 <p>
-there was literally no reason to do this. i just wanted to see how small i could
-make my pause implementation. the answer is pretty fucking small (127 bytes).
-like smaller than its source (478 bytes).
-
-huge thanks to https://nathanotterness.com/2021/10/tiny_elf_modernized.html
+same idea as <a href=./clear.asm>./clear.asm</a>
 </p>
 
 {% raw %}
 <pre>
 <code>
+; pause.asm (x86_64) - the cutest possible(?) implementation of pause
+;
+; licensing:
+;   do whatever the fuck you want
+;   im not involved
+;
 ; assemble using:
-;   nasm -f bin -o pause pause.asm
+;   nasm -f bin pause.asm -o /dev/stdout | install -vm755 /dev/stdin pause
+;
+; -- tox
 [bits 64]
 
 file_load_va: equ 4096 * 40
@@ -37,7 +41,7 @@ dd 1
 
 dq entry_point + file_load_va
 dq program_headers_start
-; section header is ommitted to save a few bytes
+; section header is omitted to save a few bytes
 dq 0
 dd 0
 dw 64

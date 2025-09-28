@@ -9,18 +9,13 @@
 
 <pre>
 <code>
+git clone --depth=1 https://github.com/xyproto/tinyxxd .
 
-tmpwtf=$(mktemp -d /tmp/XXX.wtf)
-git clone --depth=1 https://github.com/xyproto/tinyxxd $tmpwtf
-
-pushd $tmpwtf >/dev/null
 make
 make install
-install -vDm644 tinyxxd.1 /usr/share/man/man1/xxd.1
-popd >/dev/null
 
+install -vDm644 tinyxxd.1 /usr/share/man/man1/xxd.1
 mv -vf /usr/bin/{tiny,}xxd
-rm -rf $tmpwtf
 </code>
 </pre>
 

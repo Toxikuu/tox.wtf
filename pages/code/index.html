@@ -1,15 +1,16 @@
 {% extends "base.html" %}
+
+{% block header %}
+    {{ macros.pwd(["code/"]) }}
+{% endblock %}
+
 {% block content %}
 
-<h2><a href=/>/</a><a href=/code/>code/</a></h2>
 <p>::: code snippets, scripts, etc.</p>
 
 <ul>
-{% for f in code %}
-    <li><a href="{{ f.href }}">{{ f.name }}</a></li>
-{% else %}
-    <li>no code found D:</li>
-{% endfor %}
+    <li><a href="tinaries/">tinaries/</a></li>
+    <li><a href="fzm.sh">fzm.sh</a></li>
 </ul>
 
 {% endblock %}

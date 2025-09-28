@@ -9,12 +9,11 @@
 
 <pre>
 <code>
-tmpwtf=$(mktemp -d /tmp/XXX.wtf)
-git clone --depth=1 https://github.com/haampie/libtree $tmpwtf
+git clone --depth=1 https://github.com/haampie/libtree .
 
-make -C $tmpwtf PREFIX=/usr DISPATCH=1
-make -C $tmpwtf PREFIX=/usr DISPATCH=1 install
-rm -rf  $tmpwtf /usr/lib/libxxhash.a
+make PREFIX=/usr DISPATCH=1
+make PREFIX=/usr DISPATCH=1 install
+rm -vf /usr/lib/libxxhash.a
 </code>
 </pre>
 

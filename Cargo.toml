@@ -1,0 +1,10 @@
+[package]
+name = "site-template"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+color-eyre = "0.6.5"
+minijinja = "2.12.0"
+fshelpers = { git = "https://github.com/toxikuu/fshelpers" }
+walkdir = "2.5.0"

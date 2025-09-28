@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.pwd(["pkgs", "iana-etc"]) }}
+{% endblock %}
+
+{% block content %}
+<p>::: iana's services and protocols</p>
+
+<pre>
+<code>
+curl -fsSL 'https://api.github.com/repos/mic92/iana-etc/releases?per_page=1&amp;page=1' |
+    jq .[].assets[0].browser_download_url -r |
+    xargs curl -fsSL |
+    tar --strip-components=1 -xzvf - --wildcards '*'/{services,protocols} -C /etc
+
+</code>
+</pre>
+
+{% endblock %}

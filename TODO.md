@@ -1,0 +1,2 @@
+- [ ] push
+- [ ] make fuj autopull periodically so i dont have to keep ssh'ing in

@@ -1,3 +1,12 @@
+body::-webkit-scrollbar pre::-webkit-scrollbar {
+    display: none;
+}
+
+body pre {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 /* TODO: Woff2 these fonts */
 @font-face {
     font-family: spleen;
@@ -15,7 +24,7 @@
 
 body {
     font-family: tamzen;
-    background-color: #24272f;
+    background-color: #000000;
     text-align: left;
     color: #f6e5dd;
     margin: 2rem;
@@ -24,30 +33,37 @@ body {
 header {
     font-family: tamzen;
     text-align: right;
-    background-color: #24272f;
+    background-color: #000000;
     color: #f6e5dd;
 }
 
 footer {
     font-family: tamzen;
     text-align: left;
-    background: #24272f;
-    color: #f2a978;
+    background: #000000;
+    color: #ff66ff;
 }
 
 
 blockquote {
     font-family: tamzen;
     text-align: left;
-    background-color: #24272f;
-    color: #f2a978;
+    background-color: #000000;
+    color: #ff66ff;
+    border-left: 2px solid #ff66ff;
+    margin: 0.5em 10px;
+    padding: 0em 15px;
+}
+
+blockquote p {
+    display: inline;
 }
 
 
 /* links */
 a {
     font-family: tamzen;
-    color: #f2a978;
+    color: #ff66ff;
     text-decoration: none;
 }
 
@@ -71,10 +87,10 @@ li::before {
 
 /* code blocks */
 pre {
-    background: #24272f;
-    color: #97adc2;
+    background: #000000;
+    color: #ff66ff;
 
-    border: 1px solid #f2a978;
+    border: 1px solid #ff66ff;
 
     overflow-x: auto;
     padding-left: 1em;

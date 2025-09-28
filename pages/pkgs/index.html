@@ -1,7 +1,10 @@
 {% extends "base.html" %}
-{% block content %}
 
-<h2><a href=/>/</a><a href=/pkgs/>pkgs/</a></h2>
+{% block header %}
+    {{ macros.pwd(["pkgs/"]) }}
+{% endblock %}
+
+{% block content %}
 
 <p>::: instructions for building packages</p>
 
@@ -11,12 +14,23 @@ here. if you'd like to suggest a package or contribute your own directions,
 contact me, submit a pr, etc.
 </p>
 
+<p>
+note that all the package build instructions will pollute your build directory
+and may confuse your package manager as they install to /usr.
+</p>
+
 <ul>
-{% for pkg in pkgs %}
-    <li><a href="{{ pkg.href }}">{{ pkg.name }}</a></li>
-{% else %}
-    <li>no packages found :(</li>
-{% endfor %}
+    <li><a href="catgirl">catgirl</a></li>
+    <li><a href="entr">entr</a></li>
+    <li><a href="hwdata">hwdata</a></li>
+    <li><a href="iana-etc">iana-etc</a></li>
+    <li><a href="less">less</a></li>
+    <li><a href="libretls">libretls</a></li>
+    <li><a href="libtree">libtree</a></li>
+    <li><a href="rg">rg</a></li>
+    <li><a href="socat">socat</a></li>
+    <li><a href="tinyxxd">tinyxxd</a></li>
+    <li><a href="xxhash">xxhash</a></li>
 </ul>
 
 {% endblock %}

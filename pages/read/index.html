@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% block content %}
 
-<h2><a href=/>/</a><a href=/read/>read/</a></h2>
+{% block header %}
+    {{ macros.pwd(["read/"]) }}
+{% endblock %}
+
+{% block content %}
 
 <p>::: byte-sized radical reading material</p>
 
 <ul>
-{% for f in files %}
-    <li><a href="{{ f.href }}">{{ f.name }}</a></li>
-{% else %}
-    <li>no files found D:</li>
-{% endfor %}
+    <li><a href="freedom">freedom</a></li>
+    <li><a href="terror">terror</a></li>
 </ul>
 
 {% endblock %}

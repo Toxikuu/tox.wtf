@@ -9,20 +9,15 @@
 
 <pre>
 <code>
-tmpwtf=$(mktemp -d /tmp/XXX.wtf)
 curl -fsSL http://www.dest-unreach.org/socat/download/socat-1.8.0.3.tar.gz |
-    tar -C $tmpwtf --strip-components=1 -xzf -
+    tar --strip-components=1 -xzf -
 
-pushd $tmpwtf >/dev/null
 ./configure         \
     --prefix=/usr   \
     --mandir=/usr/share/man
 
 make
 make install
-popd >/dev/null
-
-rm -rf $tmpwtf
 </code>
 </pre>
 

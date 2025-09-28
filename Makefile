@@ -5,10 +5,15 @@
 all: build
 
 clean:
+	rm -rf target/site
+
+purge:
 	rm -rf target
 
 build:
-	python3 py/render.py
+	cargo run
+	find target -type f -iname '*.html' -print0 | xargs -0 tidy -m -config tidyconf
+	cp -af static target/site/s
 
 serve: build
 	caddy run --config Caddyfile
@@ -16,4 +21,4 @@ serve: build
 local-serve: build
 	caddy run --config Caddyfile.local
 
-dev: clean build serve
+dev: clean build local-serve

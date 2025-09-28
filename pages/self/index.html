@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% block content %}
 
-<h2><a href=/>/</a><a href=/self/>self/</a></h2>
+{% block header %}
+    {{ macros.pwd(["self/"]) }}
+{% endblock %}
+
+{% block content %}
 
 <p>::: self</p>
 
 <ul>
-{% for f in files %}
-    <li><a href="{{ f.href }}">{{ f.name }}</a></li>
-{% else %}
-    <li>no files found D:</li>
-{% endfor %}
+    <li><a href="about">about</a> ::: about this site</li>
+    <li><a href="bio">bio</a> ::: about me</li>
 </ul>
 
 {% endblock %}

@@ -1,15 +1,15 @@
 {% extends "base.html" %}
+
+{% block header %}
+    {{ macros.pwd(["imgs/"]) }}
+{% endblock %}
+
 {% block content %}
 
-<h2><a href=/>/</a><a href=/imgs/>imgs/</a></h2>
 <p>::: various images</p>
 
 <ul>
-{% for img in imgs %}
-    <li><a href="{{ img.href }}">{{ img.name }}</a></li>
-{% else %}
-    <li>no imgs found :/</li>
-{% endfor %}
+    <li><a href="pfp">pfp</a> ::: my profile picture</li>
 </ul>
 
 {% endblock %}
