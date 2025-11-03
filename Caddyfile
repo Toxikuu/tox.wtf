@@ -1,13 +1,17 @@
 tox.wtf {
-        root * /srv/www/tox.wtf/target/site
+    root * /srv/www/tox.wtf/target/site
 
-        # Fallbacks
-        try_files {path} {path}.html {path}/index.html
+    # Fallbacks
+    try_files {path} {path}.html {path}/index.html
 
+    file_server
+
+    handle_errors {
+        rewrite * /e/{http.error.status_code}.html
         file_server
+    }
+}
 
-        handle_errors {
-            rewrite * /e/{http.error.status_code}.html
-            file_server
-        }
+init.tox.wtf {
+    reverse_proxy :3001
 }
