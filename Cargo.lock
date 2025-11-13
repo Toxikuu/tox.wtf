@@ -78,7 +78,7 @@ dependencies = [
 [[package]]
 name = "fshelpers"
 version = "0.1.1"
-source = "git+https://github.com/toxikuu/fshelpers#5b03aa8b7693f065e020976101dacbc86240cf70"
+source = "git+https://github.com/tox-wtf/fshelpers#5b03aa8b7693f065e020976101dacbc86240cf70"
 dependencies = [
  "permitit",
  "tracing",
