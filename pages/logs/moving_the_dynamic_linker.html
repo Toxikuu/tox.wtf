@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.pwd(["logs", "moving_the_dynamic_linker"]) }}
+{% endblock %}
+
+{% block content %}
+<p>::: interpreter witchcraft to achieve a relatively ert nomultilib filesystem
+hierarchy</p>
+
+<p>
+when i first began lfs, the presence of a mysterious /lib64 containing two files
+never sat right with me. it's not even supposed to exist at /usr/lib64!
+</p>
+
+<blockquote>
+for the instructions in lfs and blfs to work correctly, it is imperative that
+this directory [/usr/lib64/] be non-existent. from time to time you should
+verify that it does not exist, because it is easy to create it inadvertently,
+and this will probably break your system.
+</blockquote>
+
+<p>
+after bricking my lfs once by naively deleting /lib64, and thereby breaking all
+dynamically linked binaries, i decided i wanted to get rid of this annoying
+directory in my root properly. not only is it confusing, but it clutters /.
+</p>
+
+<p>
+thence began the journey of grepping through glibc and gcc source code to divine
+how i might change this directory. after some investigating, i discovered i
+could patch libc_cv_rtlddir much like lfs already patches libc_cv_slibdir in
+glibc. again, through similar exploration, i set the default linker directory to
+/usr/lib for gcc via a sed.
+</p>
+
+<pre><code># the variable to pass to glibc's configure script, around the same time the
+# libc_cv_slibdir variable is passed
+libc_cv_rtlddir=/usr/lib
+</code></pre>
+
+<pre><code># the gcc sed in question, to be applied around the same time the default 64-bit
+# library directory name is:
+sed -i 's,/lib64/ld-linux,/usr/lib/ld-linux,g' gcc/config/i386/linux64.h
+</code></pre>
+
+<p>
+but it's not over yet; we still need to patch ldd to look in the correct place.
+while lfs also applies a patch, they only remove /usr from /usr/lib64, leaving
+/lib64.
+</p>
+
+<pre><code>patch -d "$LFS/usr/bin/" << .
+--- ldd
++++ ldd
+@@ -29 +29 @@
+-RTLDLIST="/usr/lib64/ld-linux-x86-64.so.2 /usr/lib/ld-linux.so.2 /usr/libx32/ld-linux-x32.so.2"
++RTLDLIST="/usr/lib/ld-linux-x86-64.so.2"
+.
+</code></pre>
+
+<p>
+it's also important to run some sanity checks at this point:
+</p>
+
+<pre><code>echo 'int main(){}' | "$LFS_TGT-gcc" -x c - -v -Wl,--verbose &> dummy.log
+readelf -l a.out | grep 'Requesting program interpreter: /usr/lib/ld-linux-x86-64.so.2'
+grep -Eo "$LFS/lib.*/S?crt[1in].*succeeded" dummy.log
+grep -B3 "^ $LFS/usr/include" dummy.log
+grep 'SEARCH.*/usr/lib' dummy.log | sed 's|; |\n|g' | grep '='
+grep "/lib.*/libc.so.6 " dummy.log | grep succeeded
+grep found dummy.log | grep "$LFS/usr/lib/ld-linux-x86-64.so.2"
+rm -v a.out dummy.log
+</code></pre>
+
+<p>
+those checks differ slightly from the ones lfs runs in that, again, we're
+looking for a program interpreter under /usr/lib instead of /lib64.
+</p>
+
+<p>
+these tweaks must be applied each time glibc or gcc is rebuilt. additionally,
+patchelf and libtree are both indispensable utilities for troubleshooting
+dynamic linking on such a system.
+</p>
+
+<p>
+once we've compiled stage 2 lfs, it's time to chroot in and build stage 3. but
+there's a problem -- the utilities we cross-compiled from our host system have
+their dynamic linker hardcoded to /lib64/ld-linux-x86-64.so.2. to fix this, we
+call upon patchelf, my beloved:
+</p>
+
+<pre><code>find "$LFS/usr" -type f -executable | while read -r elf; do
+    if head -c4 "$elf" | grep -qF ELF; then
+        interp="$(patchelf --print-interpreter "$elf" 2>/dev/null || true)";
+        if echo "$interp" | grep -qF "/lib64/ld-linux-x86-64.so.2"; then
+            patchelf --set-interpreter "/usr/lib/ld-linux-x86-64.so.2" "$elf"
+            printf "patched interpreter for %s\n" "$elf"
+        fi
+    fi
+done
+</code></pre>
+
+<p>
+finally we can chroot in and build out the stage 3 system. once again, it's
+necessary to continue applying the build tweaks for gcc and glibc from before.
+</p>
+
+<p>
+assuming all has gone smoothly, the final system might look a little like this
+(note i've also moved /root into /home):
+</p>
+
+<pre><code>$ cd $LFS
+
+$ ls -l
+Octal Permissions Size User Date Modified Name
+0777  lrwxrwxrwx     - root  3 Nov 23:26  bin -> usr/bin/
+0755  drwxr-xr-x     - root  3 Nov 23:51  dev/
+0755  drwxr-xr-x     - root  3 Nov 23:54  etc/
+0755  drwxr-xr-x     - root  3 Nov 23:51  home/
+0777  lrwxrwxrwx     - root  3 Nov 23:26  lib -> usr/lib/
+0755  drwxr-xr-x     - root  3 Nov 23:51  proc/
+1777  drwxrwxrwt     - root  3 Nov 23:51  run/
+0555  dr-xr-xr-x     - root  3 Nov 23:51  sys/
+1777  drwxrwxrwt     - root  3 Nov 23:54  tmp/
+0755  drwxr-xr-x     - root  3 Nov 23:40  usr/
+0755  drwxr-xr-x     - root  3 Nov 23:51  var/
+
+$ patchelf --print-interpreter bin/ld
+/usr/lib/ld-linux-x86-64.so.2
+</code></pre>
+
+<p>
+for some ending notes, dynamically linked binaries compiled elsewhere will not
+work on this system until their interpreter is patched:
+</p>
+
+<pre><code>patchelf --set-interpreter /usr/lib/ld-linux-x86-64.so.2
+</code></pre>
+
+<p>
+for further detail, please refer to the
+<a href="https://github.com/tox-wtf/s-lfstage">s stage file build scripts</a>.
+</p>
+
+{% endblock %}
