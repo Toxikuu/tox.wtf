@@ -13,7 +13,7 @@ purge:
 build:
 	cargo run
 	find target -type f -iname '*.html' -print0 | xargs -0 tidy -m -config tidyconf
-	cp -af static target/site/s
+	cp -af static -T target/site/s
 
 serve: build
 	caddy run --config Caddyfile
