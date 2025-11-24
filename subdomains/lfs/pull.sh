@@ -2,5 +2,5 @@
 
 set -euo pipefail
 
-git submodule update
+git submodule update --init --recursive
 git submodule status
