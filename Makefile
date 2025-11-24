@@ -1,8 +1,11 @@
 -include config.mk
 
-.PHONY: all clean build serve dev local-serve
+.PHONY: all clean build serve dev local-serve subdomains
 
-all: build
+SUBDOMAINS = lfs
+.PHONY: subdomains/$(SUBDOMAINS)
+
+all: build subdomains
 
 clean:
 	rm -rf target/site
@@ -10,10 +13,17 @@ clean:
 purge:
 	rm -rf target
 
-build:
+build: Cargo.toml
 	cargo run
-	find target -type f -iname '*.html' -print0 | xargs -0 tidy -m -config tidyconf
+	find target/site -type f -iname '*.html' -print0 | xargs -0 tidy -m -config tidyconf
 	cp -af static -T target/site/s
+
+subdomains: subdomains/$(SUBDOMAINS)
+
+subdomains/$(SUBDOMAINS):
+	@for subdomain in $(SUBDOMAINS); do \
+		cd subdomains/$$subdomain && $(MAKE); \
+	done
 
 serve: build
 	caddy run --config Caddyfile
