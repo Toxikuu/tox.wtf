@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-for book in *lfs; do
+for book in lfs slfs glfs blfs; do
     pushd "$book" >/dev/null
 
     make clean
