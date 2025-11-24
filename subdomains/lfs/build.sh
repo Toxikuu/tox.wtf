@@ -8,6 +8,7 @@ for book in lfs slfs glfs blfs; do
     for rev in sysv systemd; do
         echo "Building $book-$rev"
         make REV=$rev THEMEDIR=../themes/themes THEME=sunset
+        make REV=$rev INSTALLROOT=../../../target/subdomains/lfs install
     done
 
     popd >/dev/null

@@ -1,10 +1,3 @@
-all: pull install
-
-pull:
+all:
 	./pull.sh
-
-build: pull
 	./build.sh
-
-install: build
-	./install.sh
