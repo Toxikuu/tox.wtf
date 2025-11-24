@@ -1,0 +1,15 @@
+[submodule "subdomains/lfs/lfs"]
+	path = subdomains/lfs/lfs
+	url = https://github.com/tox-wtf/lfs
+[submodule "subdomains/lfs/blfs"]
+	path = subdomains/lfs/blfs
+	url = https://github.com/tox-wtf/blfs
+[submodule "subdomains/lfs/slfs"]
+	path = subdomains/lfs/slfs
+	url = https://github.com/tox-wtf/slfs
+[submodule "subdomains/lfs/glfs"]
+	path = subdomains/lfs/glfs
+	url = https://github.com/tox-wtf/glfs
+[submodule "subdomains/lfs/themes"]
+	path = subdomains/lfs/themes
+	url = https://github.com/tox-wtf/lfs-themes
