@@ -8,7 +8,7 @@ SUBDOMAINS = lfs
 all: build subdomains
 
 clean:
-	rm -rf target/site
+	rm -rf target/site target/subdomains
 
 purge:
 	rm -rf target
