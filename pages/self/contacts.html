@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {{ macros.pwd(["self", "contacts"]) }}
+{% endblock %}
+
+{% block content %}
+<p>::: my contacts</p>
+
+<h3>email</h3>
+
+<p><a href="mailto:tox@tox.wtf">tox@tox.wtf</a></p>
+
+<h3>discord</h3>
+<p>tox-wtf</p>
+
+<!-- TODO: Self-host forgejo or stagit or cgit or something -->
+<h3>git hosts</h3>
+<ul>
+    <li><a href="https://git.gay/tox">git.gay</a></li>
+    <li><a href="https://github.com/tox-wtf">github</a></li>
+</ul>
+
+{% endblock %}
