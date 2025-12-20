@@ -12,6 +12,16 @@
     }
 }
 
+:3001 {
+    root * ./target/subdomains/vat
+    file_server
+}
+
+:3002 {
+    root * ./target/subdomains/man
+    file_server
+}
+
 :3003 {
     root * ./target/subdomains/lfs
 

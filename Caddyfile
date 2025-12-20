@@ -12,12 +12,17 @@ tox.wtf {
     }
 }
 
-init.tox.wtf {
-    reverse_proxy :3001
+vat.tox.wtf {
+    root * ./target/subdomains/vat
+    file_server
+}
+
+man.tox.wtf {
+    root * ./target/subdomains/man
+    file_server
 }
 
 lfs.tox.wtf {
-    root * /srv/www/tox.wtf/target/subdomains/lfs
-
+    root * ./target/subdomains/lfs
     file_server
 }
