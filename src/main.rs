@@ -15,6 +15,20 @@ fn render_root(env: &Environment) -> Result<()> {
 
     mkf_p(path)?;
     fs::write(path, rendered)?;
+    println!("Rendered root");
+
+    Ok(())
+}
+
+fn render_subdomain_root(env: &Environment, subdomain: &str) -> Result<()> {
+    let template = env.get_template("index.html")?;
+    let rendered = template.render(context! {})?;
+
+    let path = PathBuf::from(format!("target/subdomains/{subdomain}/index.html"));
+
+    mkf_p(&path)?;
+    fs::write(path, rendered)?;
+    println!("Rendered root for {subdomain}");
 
     Ok(())
 }
@@ -24,7 +38,7 @@ fn render_error_pages(env: &Environment) -> Result<()> {
 
     for f in read_dir("pages/e")?.flatten() {
         let path = f.path();
-        if path.extension().and_then(|e| e.to_str().map(|s| s == "html")).unwrap_or(false) {
+        if path.extension().is_some_and(|e| e.to_str().is_some_and(|s| s == "html")) {
             add_template_from_path(&mut env, &path)?;
 
             // FIXME: Log failures here
@@ -45,20 +59,36 @@ fn render_error_pages(env: &Environment) -> Result<()> {
 
 fn should_template<P: AsRef<Path>>(path: P) -> bool {
     let path = path.as_ref();
-    path.is_file() &&
-        path.extension().and_then(|e| e.to_str().map(|s| s == "html")).unwrap_or(false)
+    eprint!("Checking if we should template {path:?}... ");
+    let should_render = path.is_file() &&
+        path.extension().is_some_and(|e| e == OsStr::new("html")) &&
+        path.file_name().is_some_and(|e| !matches!(e.as_encoded_bytes(), b"base.html" | b"macros.html")) &&
+        path.iter().all(|p| p != OsStr::new("e"));
+
+    match should_render {
+        true => eprintln!("yes"),
+        false => eprintln!("no"),
+    }
+
+    should_render
 }
 
-// Collect pages recursively
 fn collect_pages() -> Vec<PathBuf> {
     WalkDir::new("pages")
-        .min_depth(2) // TODO: Should be 1 ideally
+        .min_depth(1)
         .into_iter()
         .filter_map(|e| e.map(|e| e.path().to_path_buf()).ok())
-        .filter(|e| e.is_file())
-        .filter(|e| e.iter().any(|p| p.to_string_lossy() != "e"))
-        .filter(|e| e.extension() == Some(OsStr::new("html")))
-        .collect::<Vec<_>>()
+        .filter(|e| should_template(e))
+        .collect()
+}
+
+fn collect_subdomain_pages(subdomain: &str) -> Vec<PathBuf> {
+    WalkDir::new(format!("subdomains/{subdomain}"))
+        .min_depth(1)
+        .into_iter()
+        .filter_map(|e| e.map(|e| e.path().to_path_buf()).ok())
+        .filter(|e| should_template(e))
+        .collect()
 }
 
 fn render_pages(env: &Environment) -> Result<()> {
@@ -72,6 +102,30 @@ fn render_pages(env: &Environment) -> Result<()> {
         let rendered = template.render(context! {})?;
 
         let path = Path::new("target/site/").join(f.to_string_lossy().trim_start_matches("pages/"));
+
+        mkf_p(&path)?;
+        fs::write(path, rendered)?;
+    }
+
+    Ok(())
+}
+
+fn render_subdomain_pages(env: &Environment, subdomain: &str) -> Result<()> {
+    let mut env = env.clone();
+
+    for f in collect_subdomain_pages(subdomain) {
+        add_template_from_path(&mut env, &f)?;
+        let Some(filename) = f.file_name().and_then(|f| f.to_str()) else { continue };
+
+        let template = env.get_template(filename)?;
+        let rendered = template.render(context! {})?;
+
+        let path = PathBuf::from(format!("target/subdomains/{subdomain}"))
+            .join(f.to_string_lossy()
+                .trim_start_matches(format!("subdomains/{subdomain}/")
+                .trim_start_matches("pages/")
+                )
+            );
 
         mkf_p(&path)?;
         fs::write(path, rendered)?;
@@ -103,9 +157,13 @@ fn main() -> Result<()> {
     add_template_from_path(&mut env, "pages/base.html")?;
     add_template_from_path(&mut env, "pages/index.html")?;
 
-    render_root(&env)?;
     render_error_pages(&env)?;
     render_pages(&env)?;
+
+    env.clear_templates();
+    add_template_from_path(&mut env, "subdomains/man/index.html")?;
+    add_template_from_path(&mut env, "subdomains/man/base.html")?;
+    render_subdomain_pages(&env, "man")?;
 
     Ok(())
 }
