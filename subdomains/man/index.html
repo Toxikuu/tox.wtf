@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>
+    <a href=/>/</a>
+</h2>
+
+<h3>::: hihi this is the man subdomain</h3>
+
+<p>
+I host raw man pages here. Try the below command:
+</p>
+
+<pre><code>curl -fsSL "https://man.tox.wtf/fgets.3" | man /dev/stdin</code></pre>
+
+<p>
+It's lowkey chill as fuck because this lets you reference man pages you don't
+have installed without having to look at them in a web browser. Here's a
+function that wraps the above command:
+</p>
+
+<pre><code>manwtf() {
+    curl -fsSL "https://man.tox.wtf/$1" | man /dev/stdin
+}</code></pre>
+
+{% endblock %}
