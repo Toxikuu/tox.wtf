@@ -9,44 +9,69 @@ body pre {
 
 /* TODO: Woff2 these fonts */
 @font-face {
-    font-family: spleen;
-    src: url('/s/fonts/spleen.otf') format('opentype');
+    font-family: iosevka;
+    src: url('/s/fonts/iosevka.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: tamzen;
-    src: url('/s/fonts/tamzen.ttf') format('truetype');
+    font-family: stack_sans_notch;
+    src: url('/s/fonts/stack_sans_notch.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
+@font-face {
+    font-family: inter;
+    src: url('/s/fonts/inter.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+}
+
+html, body {
+    margin: 0;
+}
+
 body {
-    font-family: tamzen;
+    font-family: iosevka;
     background-color: #17161A;
-    text-align: left;
     color: #eeeefe;
-    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-family: stack_sans_notch;
+    text-align: center;
+    background-color: #17161A;
+    color: #eeeefe;
+}
+
+.logo {
+    font-family: inter;
 }
 
 header {
-    font-family: tamzen;
-    text-align: right;
-    background-color: #17161A;
+    font-family: stack_sans_notch;
+    text-align: center;
     color: #eeeefe;
 }
 
 footer {
-    font-family: tamzen;
-    text-align: left;
-    background: #17161A;
+    font-family: stack_sans_notch;
+    text-align: center;
     color: #EBB894;
+    padding: 0rem;
 }
 
-
 blockquote {
-    font-family: tamzen;
+    font-family: sharetech;
     text-align: left;
     background-color: #17161A;
     color: #EBB894;
@@ -62,7 +87,7 @@ blockquote p {
 
 /* links */
 a {
-    font-family: tamzen;
+    font-family: sharetech;
     color: #EBB894;
     text-decoration: none;
 }
@@ -93,10 +118,11 @@ pre {
     border: 1px solid #EBB894;
 
     overflow-x: auto;
+    padding: 0.5em;
     padding-left: 1em;
 }
 
 code {
-    font-family: tamzen;
+    font-family: sharetech;
     font-size: 0.9em;
 }
