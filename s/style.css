@@ -31,7 +31,6 @@ body pre {
 
 main {
     flex: 1;
-    padding: 2rem;
 }
 
 html, body {
@@ -42,6 +41,9 @@ body {
     font-family: iosevka;
     background-color: #17161A;
     color: #eeeefe;
+
+    padding-left: 1rem;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
