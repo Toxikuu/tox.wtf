@@ -14,15 +14,27 @@ tox.wtf {
 
 vat.tox.wtf {
     root * ./target/subdomains/vat
+
+    # Fallbacks
+    try_files {path} {path}.html {path}/index.html
+
     file_server
 }
 
 man.tox.wtf {
     root * ./target/subdomains/man
+
+    # Fallbacks
+    try_files {path} {path}.html {path}/index.html
+
     file_server
 }
 
 lfs.tox.wtf {
     root * ./target/subdomains/lfs
+
+    # Fallbacks
+    try_files {path} {path}.html {path}/index.html
+
     file_server
 }
