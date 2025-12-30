@@ -1,0 +1,110 @@
+body::-webkit-scrollbar pre::-webkit-scrollbar {
+    display: none;
+}
+
+body pre {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* TODO: Woff2 these fonts */
+@font-face {
+    font-family: iosevka;
+    src: url('/s/fonts/iosevka.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: stack_sans_notch;
+    src: url('/s/fonts/stack_sans_notch.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: iosevka;
+    background-color: #17161A;
+    text-align: left;
+    color: #eeeefe;
+    margin: 2rem;
+}
+
+title {
+    font-family: stack_sans_notch;
+    text-align: right;
+    background-color: #17161A;
+    color: #eeeefe;
+}
+
+header {
+    font-family: stack_sans_notch;
+    text-align: right;
+    background-color: #17161A;
+    color: #eeeefe;
+}
+
+footer {
+    font-family: sharetech;
+    text-align: left;
+    background: #17161A;
+    color: #EBB894;
+}
+
+
+blockquote {
+    font-family: sharetech;
+    text-align: left;
+    background-color: #17161A;
+    color: #EBB894;
+    border-left: 2px solid #EBB894;
+    margin: 0.5em 10px;
+    padding: 0em 15px;
+}
+
+blockquote p {
+    display: inline;
+}
+
+
+/* links */
+a {
+    font-family: sharetech;
+    color: #EBB894;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* lists */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li::before {
+    content: "- ";
+    color: #eeeefe;
+    margin-right: 0.5em;
+}
+
+
+/* code blocks */
+pre {
+    background: #17161A;
+    color: #EBB894;
+
+    border: 1px solid #EBB894;
+
+    overflow-x: auto;
+    padding: 0.5em;
+    padding-left: 1em;
+}
+
+code {
+    font-family: sharetech;
+    font-size: 0.9em;
+}

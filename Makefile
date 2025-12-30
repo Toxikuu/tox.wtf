@@ -5,7 +5,7 @@
 all: build subdomains tidy
 
 clean:
-	rm -rf target/site target/subdomains
+	rm -rf target/site target/subdomains target/tmp
 
 purge:
 	rm -rf target
@@ -26,10 +26,7 @@ subdomain-man:
 	$(MAKE) -C subdomains/man
 
 subdomain-vat:
-	cd subdomains/vat
-	$(MAKE) run
-	mkdir -p ../../target/subdomains/vat
-	cp -af p -T ../../target/subdomains/vat
+	$(MAKE) -C subdomains/vat
 
 serve: build
 	caddy run --config Caddyfile

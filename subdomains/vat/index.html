@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>
+    <a href=/>/</a>
+</h2>
+
+<h3>::: Version Aggregator and Tracker</h3>
+
+<p>
+This page hosts versions tracked by Vat.
+</p>
+
+<p>
+You can fetch the latest release version of FFmpeg with the following command:
+</p>
+<pre><code>curl -fsSL https://vat.tox.wtf/ffmpeg/channels/release</code></pre>
+
+<p>
+You can fetch all versions as JSON with the following command:
+</p>
+<pre><code>curl -fsSL https://vat.tox.wtf/ALL.json</code></pre>
+
+{% endblock %}

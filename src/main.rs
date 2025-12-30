@@ -165,5 +165,10 @@ fn main() -> Result<()> {
     add_template_from_path(&mut env, "subdomains/man/base.html")?;
     render_subdomain_pages(&env, "man")?;
 
+    env.clear_templates();
+    add_template_from_path(&mut env, "subdomains/vat/index.html")?;
+    add_template_from_path(&mut env, "subdomains/vat/base.html")?;
+    render_subdomain_pages(&env, "vat")?;
+
     Ok(())
 }
