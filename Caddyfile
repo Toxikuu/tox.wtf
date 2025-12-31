@@ -1,4 +1,4 @@
-tox.wtf {
+tox.wtf, http://tox.wtf {
     root * /srv/www/tox.wtf/target/site
 
     # Fallbacks
@@ -12,29 +12,44 @@ tox.wtf {
     }
 }
 
-vat.tox.wtf {
-    root * ./target/subdomains/vat
+vat.tox.wtf, http://vat.tox.wtf {
+    root * /srv/www/tox.wtf/target/subdomains/vat
 
     # Fallbacks
     try_files {path} {path}.html {path}/index.html
 
     file_server
+
+    handle_errors {
+        rewrite * /e/{http.error.status_code}.html
+        file_server
+    }
 }
 
-man.tox.wtf {
-    root * ./target/subdomains/man
+man.tox.wtf, http://man.tox.wtf {
+    root * /srv/www/tox.wtf/target/subdomains/man
 
     # Fallbacks
     try_files {path} {path}.html {path}/index.html
 
     file_server
+
+    handle_errors {
+        rewrite * /e/{http.error.status_code}.html
+        file_server
+    }
 }
 
-lfs.tox.wtf {
-    root * ./target/subdomains/lfs
+lfs.tox.wtf, http://lfs.tox.wtf {
+    root * /srv/www/tox.wtf/target/subdomains/lfs
 
     # Fallbacks
     try_files {path} {path}.html {path}/index.html
 
     file_server
+
+    handle_errors {
+        rewrite * /e/{http.error.status_code}.html
+        file_server
+    }
 }
