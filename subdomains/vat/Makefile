@@ -1,8 +1,8 @@
 all: build
 
-../../target/tmp/vat:
+../../target/subdomains/vat:
 	mkdir -pv ../../target/subdomains/vat
 
-build: ../../target/tmp/vat
+build: ../../target/subdomains/vat
 	rsync -avu --delete /home/t/src/vat/p/ ../../target/subdomains/vat/
 	cp -af s ../../target/subdomains/vat
