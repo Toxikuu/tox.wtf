@@ -10,7 +10,7 @@ clean:
 purge:
 	rm -rf target
 
-build: Cargo.toml
+build: Cargo.toml subdomains
 	cargo run
 	cp -af s target/site
 
