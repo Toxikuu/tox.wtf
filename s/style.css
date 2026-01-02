@@ -1,10 +1,20 @@
+/* Disable scrollbar */
+@-moz-document url-prefix() {
+    html{
+        scrollbar-width: none;
+    }
+}
+
+/* Disable scrollbar */
 body::-webkit-scrollbar pre::-webkit-scrollbar {
     display: none;
 }
 
-body pre {
+/* Disable scrollbar */
+html body pre {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    overflow: auto;
 }
 
 /* TODO: Woff2 these fonts */
@@ -38,6 +48,7 @@ html, body {
 }
 
 body {
+    font-size: 90%;
     font-family: iosevka;
     background-color: #17161A;
     color: #eeeefe;
@@ -55,21 +66,27 @@ body {
     color: #eeeefe;
 }
 
-.logo {
-    font-family: inter;
-}
-
 header {
     font-family: stack_sans_notch;
     text-align: center;
     color: #eeeefe;
 }
 
-footer {
+.logo {
+    font-family: inter;
+    margin: 0;
+    line-height: 0.8;
+}
+
+footer p {
+    font-size: 80%;
     font-family: stack_sans_notch;
+}
+
+footer {
     text-align: center;
     color: #EBB894;
-    padding: 0rem;
+    padding: 0;
 }
 
 blockquote {
@@ -120,8 +137,10 @@ pre {
     border: 1px solid #EBB894;
 
     overflow-x: auto;
-    padding: 0.5em;
-    padding-left: 1em;
+    padding: 0.5rem;
+    padding-left: 1rem;
+
+    margin-right: 1rem;
 }
 
 code {
