@@ -5,16 +5,12 @@
 {% endblock %}
 
 {% block content %}
-<p>::: iana's services and protocols</p>
+<h3>::: IANA's services and protocols</h3>
 
-<pre>
-<code>
-curl -fsSL 'https://api.github.com/repos/mic92/iana-etc/releases?per_page=1&amp;page=1' |
+<pre><code>curl -fsSL 'https://api.github.com/repos/mic92/iana-etc/releases?per_page=1&page=1' |
     jq .[].assets[0].browser_download_url -r |
     xargs curl -fsSL |
     tar --strip-components=1 -xzvf - --wildcards '*'/{services,protocols} -C /etc
-
-</code>
-</pre>
+</code></pre>
 
 {% endblock %}

@@ -5,22 +5,56 @@
 {% endblock %}
 
 {% block content %}
-<p>::: a little about me</p>
+<h3>::: A little about me</h3>
 
-<h3>hi im tox</h3>
+<h3>Hi I'm Tox</h3>
+
 <p>
-i daily drive linux from scratch. i'm a cs major. i'm nocturnal. i'm an
-anarchocommunist, an antitheist, and generally an iconoclast. i love music,
-especially the experimental, niche, and abrasive. i'm a celeste grandmaster, a
-decorated terrarian, one of like a dozen bmc flash players, and an avid
-gungeoneer. i also have 4,500 hours in geometry dash.
+I daily drive Linux From Scratch. I'm a CS major and a math minor. I'm
+nocturnal. I'm an anarchocommunist, an antitheist, and generally an iconoclast.
 </p>
 
-<h3>and here are a few of my projects, in no particular order</h3>
+<p>
+I fit best under the agender umbrella. As for pronouns:
+</p>
+
+<pre><code>use regex::Regex;
+use std::sync::LazyLock as Lock;
+
+macro_rules! re {
+    ($re:expr) => { Regex::new($re).expect("Invalid regex") };
+}
+
+static RE: Lock<Regex> = Lock::new(|| re! { r"[a-z]+(\/[a-z]+)+" });
+
+fn main() {
+    assert! { RE.is_match("any/all") };
+    assert! { RE.is_match("she/her") };
+    assert! { RE.is_match("they/them/theirs") };
+    assert! { !RE.is_match("https://example.com/") };
+    assert! { !RE.is_match("1/2") };
+}
+</code></pre>
+
+<p>
+I love music, especially the experimental, niche, and abrasive; my ever-growing
+local library currently sits at about 7,500 unique songs, taking up over 30 GiB
+on my SSD.
+</p>
+
+<p>
+I love difficult but noncompetitive video games. I play comfortably at the
+grandmaster level in Celeste. I play a lot of Terraria. I'm one of like a dozen
+BMC flash players, though I'm not very active. I'm a Gungeoneer. I also have
+4,500 hours in Geometry Dash (though I rarely play anything harder than insane
+demons).
+</p>
+
+<h3>Some of my projects</h3>
 <ul>
     <li><a href="https://git.gay/tox/rip">rip</a> ::: music ripper</li>
     <li><a href="https://github.com/tox-wtf/tuun">tuun</a> ::: mpv-based music player</li>
-    <li><a href="https://github.com/tox-wtf/lfstage">lfstage</a> ::: lfs stage file generator</li>
+    <li><a href="https://github.com/tox-wtf/lfstage">lfstage</a> ::: LFS stage file generator</li>
     <li><a href="https://github.com/tox-wtf/permitit">permitit</a> ::: cute error handling crate</li>
     <li><a href="https://github.com/tox-wtf/catfetch">catfetch</a> ::: cute fetch script featuring a cat</li>
     <li><a href="https://github.com/tox-wtf/tinaries">tinaries</a> ::: tiny binaries</li>

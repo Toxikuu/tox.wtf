@@ -5,18 +5,15 @@
 {% endblock %}
 
 {% block content %}
-<p>::: standalone version of vim's xxd</p>
+<h3>::: Standalone implementation of vim's xxd</h3>
 
-<pre>
-<code>
-git clone --depth=1 https://github.com/xyproto/tinyxxd .
+<pre><code>git clone --depth=1 https://github.com/xyproto/tinyxxd .
 
 make
 make install
 
 install -vDm644 tinyxxd.1 /usr/share/man/man1/xxd.1
 mv -vf /usr/bin/{tiny,}xxd
-</code>
-</pre>
+</code></pre>
 
 {% endblock %}

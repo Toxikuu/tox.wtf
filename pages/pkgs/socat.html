@@ -5,11 +5,9 @@
 {% endblock %}
 
 {% block content %}
-<p>::: multipurpose relay</p>
+<h3>::: Multipurpose relay</h3>
 
-<pre>
-<code>
-curl -fsSL http://www.dest-unreach.org/socat/download/socat-1.8.0.3.tar.gz |
+<pre><code>curl -fsSL http://www.dest-unreach.org/socat/download/socat-1.8.0.3.tar.gz |
     tar --strip-components=1 -xzf -
 
 ./configure         \
@@ -18,7 +16,6 @@ curl -fsSL http://www.dest-unreach.org/socat/download/socat-1.8.0.3.tar.gz |
 
 make
 make install
-</code>
-</pre>
+</code></pre>
 
 {% endblock %}

@@ -5,12 +5,10 @@
 {% endblock %}
 
 {% block content %}
-<p>::: a cute little script to replace dmenu with fzf and alacritty</p>
+<h3>::: Replace dmenu with fzf and alacritty</h3>
 
 {% raw %}
-<pre>
-<code>
-#!/bin/bash
+<pre><code>#!/usr/bin/env bash
 
 fifo=$(mktemp -u)
 infile=$(mktemp)
@@ -21,21 +19,18 @@ trap "rm -f $fifo $infile" EXIT
 [ ! -t 0 ] && cat > "$infile"
 
 POINTER="${POINTER:--}"
+FZF_DEFAULT_OPTS="--color=bw --border=horizontal --reverse --pointer='$POINTER ' --no-scrollbar --prompt='$POINTER ' --input-border=none --no-separator --ellipsis=''"
+
 alacritty msg create-window \
     -o window.padding.x=20  \
     -o window.padding.y=20  \
     -T fzm --class fzm      \
-    -e sh -c "
-    fzf --color=bw --border=horizontal --reverse --pointer='$POINTER ' --no-scrollbar \
-        --prompt='$POINTER ' --input-border=none --no-separator --multi --ellipsis='' \
-    $( [ -s "$infile" ] && echo "< $infile") > $fifo
-    "
-# I have my window manager configured to float and center this window
+    -e sh -c "fzf $( [ -s "$infile" ] && echo "< $infile") > $fifo"
+# I have my window manager configured to float, center, and focus this window
 
-cat "$fifo"
-rm "$fifo"
-</code>
-</pre>
+cat   "$fifo"
+rm -f "$fifo"
+</code></pre>
 {% endraw %}
 
 {% endblock %}
