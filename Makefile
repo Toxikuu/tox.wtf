@@ -2,7 +2,7 @@
 
 .PHONY: all clean build serve dev local-serve subdomains
 
-all: build subdomains tidy
+all: build subdomains
 
 clean:
 	rm -rf target/site target/subdomains target/tmp
@@ -10,14 +10,26 @@ clean:
 purge:
 	rm -rf target
 
-build: Cargo.toml subdomains
+target/tmp/pages/index.html:
+	mkdir -pv target/tmp/pages
+	cp -af pages -T target/tmp/pages
+
+build: Cargo.toml subdomains target/tmp/pages/index.html target/tmp/pages/imgs/88x31.html
 	cargo run
 	cp -af s target/site
 
-tidy: build subdomains
-	find target/{site,subdomains} -type f -iname '*.html' -print0 | xargs -0 tidy -m -config tidyconf
+# tidy: build subdomains
+# 	find target/site -type f -iname '*.html' -print0 | xargs -0 tidy -m -config tidyconf
+# 	find target/subdomains -type f -maxdepth 1 -iname '*.html' -print0 | xargs -0 tidy -m -config tidyconf
 
-subdomains: subdomain-man subdomain-vat
+target/tmp/pages/imgs/88x31.html: target/tmp/pages/index.html
+	for badge in s/88x31/*; do \
+		echo "<img width=88 height=31 src=\"/$$badge\">" >> target/tmp/pages/imgs/88x31.html; \
+	done; \
+	echo "" >> target/tmp/pages/imgs/88x31.html;
+	echo "{% endblock %}" >> target/tmp/pages/imgs/88x31.html;
+
+subdomains: subdomain-man subdomain-vat subdomain-lfs
 
 subdomain-lfs:
 	$(MAKE) -C subdomains/lfs
