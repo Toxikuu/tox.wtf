@@ -7,36 +7,10 @@ use std::path::{Path, PathBuf};
 use minijinja::{context, Environment};
 use color_eyre::Result;
 
-fn render_root(env: &Environment) -> Result<()> {
-    let template = env.get_template("index.html")?;
-    let rendered = template.render(context! {})?;
-
-    let path = Path::new("target/site/index.html");
-
-    mkf_p(path)?;
-    fs::write(path, rendered)?;
-    println!("Rendered root");
-
-    Ok(())
-}
-
-fn render_subdomain_root(env: &Environment, subdomain: &str) -> Result<()> {
-    let template = env.get_template("index.html")?;
-    let rendered = template.render(context! {})?;
-
-    let path = PathBuf::from(format!("target/subdomains/{subdomain}/index.html"));
-
-    mkf_p(&path)?;
-    fs::write(path, rendered)?;
-    println!("Rendered root for {subdomain}");
-
-    Ok(())
-}
-
 fn render_error_pages(env: &Environment) -> Result<()> {
     let mut env = env.clone(); // TODO: Consider whether I mind mangling the base env
 
-    for f in read_dir("pages/e")?.flatten() {
+    for f in read_dir("target/tmp/pages/e")?.flatten() {
         let path = f.path();
         if path.extension().is_some_and(|e| e.to_str().is_some_and(|s| s == "html")) {
             add_template_from_path(&mut env, &path)?;
@@ -74,7 +48,7 @@ fn should_template<P: AsRef<Path>>(path: P) -> bool {
 }
 
 fn collect_pages() -> Vec<PathBuf> {
-    WalkDir::new("pages")
+    WalkDir::new("target/tmp/pages")
         .min_depth(1)
         .into_iter()
         .filter_map(|e| e.map(|e| e.path().to_path_buf()).ok())
@@ -101,7 +75,7 @@ fn render_pages(env: &Environment) -> Result<()> {
         let template = env.get_template(filename)?;
         let rendered = template.render(context! {})?;
 
-        let path = Path::new("target/site/").join(f.to_string_lossy().trim_start_matches("pages/"));
+        let path = Path::new("target/site/").join(f.to_string_lossy().trim_start_matches("target/tmp/pages/"));
 
         mkf_p(&path)?;
         fs::write(path, rendered)?;
@@ -123,7 +97,7 @@ fn render_subdomain_pages(env: &Environment, subdomain: &str) -> Result<()> {
         let path = PathBuf::from(format!("target/subdomains/{subdomain}"))
             .join(f.to_string_lossy()
                 .trim_start_matches(format!("subdomains/{subdomain}/")
-                .trim_start_matches("pages/")
+                .trim_start_matches("target/tmp/pages/")
                 )
             );
 
@@ -153,9 +127,9 @@ where P: AsRef<Path>,
 fn main() -> Result<()> {
     let mut env = Environment::new();
 
-    add_template_from_path(&mut env, "pages/macros.html")?;
-    add_template_from_path(&mut env, "pages/base.html")?;
-    add_template_from_path(&mut env, "pages/index.html")?;
+    add_template_from_path(&mut env, "target/tmp/pages/macros.html")?;
+    add_template_from_path(&mut env, "target/tmp/pages/base.html")?;
+    add_template_from_path(&mut env, "target/tmp/pages/index.html")?;
 
     render_error_pages(&env)?;
     render_pages(&env)?;
