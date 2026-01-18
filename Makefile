@@ -6,6 +6,7 @@ all: build subdomains
 
 clean:
 	rm -rf target/site target/subdomains target/tmp
+	$(MAKE) -C subdomains/lfs clean
 
 purge:
 	rm -rf target
